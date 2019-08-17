@@ -1,0 +1,12 @@
+---
+- name: install additional software
+  include: software.yml
+
+- name: generate slef signed cert for centos7_jenkins
+  include: ssl.yml
+
+- name: install nginx
+  include: nginx.yml
+
+- name: install jenkins
+  include: jenkins.yml

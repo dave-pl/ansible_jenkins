@@ -1,0 +1,12 @@
+---
+
+- name:  Copy script for generating self signed cert
+  template:
+    src: generate_self_signet_cert.sh.j2
+    dest: /tmp/selfsignedforjenkins.sh
+    owner: root
+    group: root
+    mode: 0655
+
+- name: genetating cert
+  shell: bash /tmp/selfsignedforjenkins.sh

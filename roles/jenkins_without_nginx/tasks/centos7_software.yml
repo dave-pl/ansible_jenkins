@@ -1,0 +1,26 @@
+---
+- name: upgrade all packages
+  yum: name=* state=latest
+
+- name: Install additional soft
+  yum:
+    name:
+      - java-1.8.0-openjdk-devel
+      - epel-release
+      - curl
+      - vim
+      - nc
+      - wget
+      - openssl
+      - git
+    state: present
+
+- name: Disable SELinux, need reboot
+  selinux:
+    state: disabled
+
+- name: disable selinux temporary
+  shell: >
+    setenforce 0
+  register: result
+  changed_when: false

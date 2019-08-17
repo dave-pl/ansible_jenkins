@@ -1,0 +1,45 @@
+---
+- block:
+    - name: Install first part of soft
+      yum:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+        state: present
+
+    - name: add docker repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Install docker
+      yum:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Start docker
+      systemd:
+        name: docker
+        state: restarted
+
+    - name: enable docker
+      systemd:
+        name: docker
+        enabled: true
+
+    - name: add centos uder to docker group
+      shell: usermod -aG docker centos
+      register: result
+      changed_when: false
+
+    - name: install docker-compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)
+        dest: /usr/bin/docker-compose
+        mode: '755'
+
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"

@@ -1,0 +1,17 @@
+#!/bin/bash
+if ! [ -d /etc/ssl/jenkins/ ]; then mkdir /etc/ssl/jenkins/;fi && cd /etc/ssl/jenkins/
+openssl genrsa -out key.pem
+openssl req -new -key key.pem -out csr.pem<<EOF
+US
+New York
+New York City
+Bouncy Castles, Inc.
+Ministry of Water Slides
+{{ ansible_host }}
+iaroslav.davydiak@globallogic.com
+vFTK9VFLbVm3jznr
+GL
+EOF
+
+openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
+rm -rf csr.pem

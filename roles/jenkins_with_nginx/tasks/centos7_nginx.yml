@@ -1,0 +1,34 @@
+---
+- name: Install nginx for CentOS7
+  yum:
+    name: nginx
+    state: latest
+
+- name: Check if the folder /etc/nginx/conf.d  exist
+  stat:
+    path: /etc/nginx/conf.d
+  register: stat_result
+
+- name: Create folder for jenkin's config
+  file:
+    path: /etc/nginx/conf.d
+    state: directory
+  when: stat_result.stat.exists == False
+
+- name: copy config for jenkins vhost
+  template:
+    src: centos7_jenkins.conf.j2
+    dest: /etc/nginx/conf.d/jenkins.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start nginx
+  systemd:
+    name: nginx
+    state: restarted
+
+- name: enable nginx
+  systemd:
+    name: nginx
+    enabled: true

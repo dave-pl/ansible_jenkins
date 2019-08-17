@@ -1,0 +1,19 @@
+---
+- block: #--- block for RedHat ---#
+    - name: upgrade all packages
+      yum: name=* state=latest
+
+    - name: Install additional soft
+      yum:
+        name:
+          - java-1.8.0-openjdk-devel
+          - epel-release
+          - curl
+          - vim
+          - nc
+          - wget
+          - openssl
+          - git
+        state: present
+
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"

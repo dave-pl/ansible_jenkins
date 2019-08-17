@@ -1,0 +1,6 @@
+---
+- name: install soft
+  include: soft.yml
+
+- name: install docker
+  include: docker.yml
