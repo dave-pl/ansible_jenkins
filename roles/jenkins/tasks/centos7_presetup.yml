@@ -24,3 +24,12 @@
     setenforce 0
   register: result
   changed_when: false
+
+- name: Set hostname
+  hostname:
+    name: "{{ hostname }}"
+
+- name: Modify hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: '{{ ansible_default_ipv4.address }} {{ hostname }}'

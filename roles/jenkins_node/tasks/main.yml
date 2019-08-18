@@ -1,5 +1,5 @@
 ---
-- name: install soft
+- name: install soft, set hostname
   include: soft.yml
 
 - name: install docker

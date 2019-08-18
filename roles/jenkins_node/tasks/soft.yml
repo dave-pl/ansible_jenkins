@@ -16,4 +16,13 @@
           - git
         state: present
 
+    - name: Set hostname
+      hostname:
+        name: "{{ hostname }}"
+
+    - name: Modify hosts
+      lineinfile:
+        dest: /etc/hosts
+        line: '{{ ansible_default_ipv4.address }} {{ hostname }}'
+
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"

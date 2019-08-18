@@ -1,6 +1,6 @@
 ---
-- name: install additional software
-  include: software.yml
+- name: install additional software, set hostname
+  include: presetup.yml
 
 - name: generate slef signed cert for centos7_jenkins
   include: ssl.yml
