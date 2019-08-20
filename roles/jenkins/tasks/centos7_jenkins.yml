@@ -21,7 +21,6 @@
     #line: 'JENKINS_ARGS="--httpsPort=8443 --httpsCertificate=/etc/ssl/jenkins/cert.pem --httpsPrivateKey=/etc/ssl/jenkins/key.pem --httpPort=-1"'
     line: 'JENKINS_ARGS="--httpsPort=8443 --httpsCertificate=/etc/ssl/jenkins/cert.pem --httpsPrivateKey=/etc/ssl/jenkins/key.pem"'
 
-
 - name: start jenkins
   systemd:
     name: jenkins
@@ -32,8 +31,16 @@
     name: jenkins
     enabled: true
 
+- name: add path to awscli
+  shell: |
+    if [ -d /var/lib/jenkins/ ]; then echo 'export PATH=/usr/local/bin:$PATH' >> /var/lib/jenkins/.bashrc;fi
+
 - name: waiting for generating password for jenkins activation
   shell: sleep 30
+
+- name: Run a command as the apache user
+  command: ssh-keygen -f ~/.ssh/id_rsa -P ""
+  become_user: jenkins
 
 - name: getting password for jenkins
   shell: >

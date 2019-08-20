@@ -24,6 +24,10 @@
     name: jenkins
     enabled: true
 
+- name: Run a command as the apache user
+  command: ssh-keygen -f ~/.ssh/id_rsa -P ""
+  become_user: jenkins
+
 - name: waiting for generating password for jenkins activation
   shell: sleep 30
 

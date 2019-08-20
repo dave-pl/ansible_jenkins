@@ -1,2 +1,3 @@
 [jenkins]
-ec2-instance ansible_host=3.120.131.82 ansible_user=centos ansible_ssh_private_key_file=/home/dave/projects/jenkins/jenkins.pem hostname=jenkins_node1
+#jenkins_master ansible_host=3.17.24.235 ansible_user=centos ansible_ssh_private_key_file=/home/iaroslavdavydiak/Documents/jenkins/dave_jenkins.pem hostname=jenkins_master
+jenkins_stage_node ansible_host=18.218.68.173 ansible_user=centos ansible_ssh_private_key_file=/home/iaroslavdavydiak/Documents/jenkins/dave_jenkins.pem hostname=jenkins_stage

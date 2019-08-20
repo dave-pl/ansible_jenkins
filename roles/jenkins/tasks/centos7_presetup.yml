@@ -63,4 +63,3 @@
   lineinfile:
     dest: /etc/hosts
     line: '{{ ansible_default_ipv4.address }} {{ hostname }}'
-

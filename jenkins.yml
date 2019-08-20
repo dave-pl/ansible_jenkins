@@ -12,5 +12,5 @@
     setup:
   roles:
 #  - jenkins_with_nginx
-  - jenkins
-#  - jenkins_node
+#  - jenkins
+  - jenkins_node

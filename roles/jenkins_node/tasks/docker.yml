@@ -15,7 +15,7 @@
 
     - name: Install docker
       yum:
-        name:
+        name: install docker components
           - docker-ce
           - docker-ce-cli
           - containerd.io
@@ -31,15 +31,18 @@
         name: docker
         enabled: true
 
-    - name: add centos uder to docker group
+    - name: add centos user to docker group
       shell: usermod -aG docker centos
       register: result
       changed_when: false
 
+    - name: Run a command as the apache user
+      command: ssh-keygen -f ~/.ssh/id_rsa -P ""
+      become_user: centos
+
     - name: install docker-compose
-      get_url:
-        url: https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)
-        dest: /usr/bin/docker-compose
-        mode: '755'
+      shell: |
+        curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
+        chmod 755 /usr/bin/docker-compose
 
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
