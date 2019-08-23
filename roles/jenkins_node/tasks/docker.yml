@@ -1,5 +1,6 @@
 ---
 - block:
+
     - name: Install first part of soft
       yum:
         name:
@@ -15,7 +16,7 @@
 
     - name: Install docker
       yum:
-        name: install docker components
+        name:
           - docker-ce
           - docker-ce-cli
           - containerd.io
@@ -36,7 +37,7 @@
       register: result
       changed_when: false
 
-    - name: Run a command as the apache user
+    - name: Generate ssh key for centos user
       command: ssh-keygen -f ~/.ssh/id_rsa -P ""
       become_user: centos
 

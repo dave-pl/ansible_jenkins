@@ -14,6 +14,12 @@
     name: jenkins
     state: present
 
+- name: change port
+  lineinfile:
+    dest: /etc/sysconfig/jenkins
+    regexp: ^JENKINS_ARGS=
+    line: 'JENKINS_ARGS="--httpListenAddress=127.0.0.1"'
+
 - name: start jenkins
   systemd:
     name: jenkins
@@ -24,9 +30,13 @@
     name: jenkins
     enabled: true
 
-- name: Run a command as the apache user
+- name: Generate ssh key for jenkins user
   command: ssh-keygen -f ~/.ssh/id_rsa -P ""
   become_user: jenkins
+
+- name: add path to awscli
+  shell: |
+    if [ -d /var/lib/jenkins/ ]; then echo 'export PATH=/usr/local/bin:$PATH' >> /var/lib/jenkins/.bashrc;fi
 
 - name: waiting for generating password for jenkins activation
   shell: sleep 30
@@ -38,4 +48,4 @@
   changed_when: false
 
 - name: secret password for jenkins activation
-  debug: msg=" Follow this link https://{{ ansible_host }} end paste password  {{ result.stdout }} for jenkins activation"
+  debug: msg=" Follow this link https://{{ ansible_host }}:443 end paste password  {{ result.stdout }} for jenkins activation"

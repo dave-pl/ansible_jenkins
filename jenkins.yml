@@ -1,7 +1,7 @@
 ---
 
 - name: Install jenkins
-  hosts: jenkins
+  hosts: jenkins_node
   gather_facts: no
   become: yes
   pre_tasks:
